@@ -2,12 +2,13 @@
 
 # Connect to docker host
 provider "docker" {
-  host = "tcp://docker:2345/"
+  # host = "tcp://localhost:2376"
+  host = "unix:///var/run/docker.sock"
 }
 
 # Pick the docker image
 resource "docker_image" "nginx" {
-  name = "nginx:1.11-alpine"
+  name = "nginx:latest"
 }
 
 resource "docker_container" "nginx-server" {
@@ -15,10 +16,7 @@ resource "docker_container" "nginx-server" {
   image = "${docker_image.nginx.latest}"
   ports {
     internal = 80
+    external = 80
   }
-  volumes {
-    container_path  = "/usr/share/nginx/html"
-    host_path = "/home/scrapbook/tutorial/www"
-    read_only = true
-  }
+
 }
