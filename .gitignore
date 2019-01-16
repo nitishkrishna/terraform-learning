@@ -28,3 +28,6 @@ override.tf.json
 # SSH keys
 *.pub
 *.pem
+
+# Env files
+*.env
